@@ -1,10 +1,13 @@
 package com.gaowj.utils;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 
 public class SparkUtil {
     public static JavaSparkContext getSc(String name) {
+        Logger.getLogger("org.apache.spark").setLevel(Level.ERROR);
         SparkConf conf = new SparkConf()
                 .setAppName(name)
                 .setMaster("local[*]")
