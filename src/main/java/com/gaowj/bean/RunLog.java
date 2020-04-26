@@ -135,7 +135,7 @@ public class RunLog {
 
     @Override
     public String toString() {
-        return "RunLog{" +
+        return "RunLog--->{" +
                 "operation='" + operation + '\'' +
                 ", province='" + province + '\'' +
                 ", city='" + city + '\'' +

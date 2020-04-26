@@ -3,6 +3,7 @@ package com.gaowj.common;
 import com.gaowj.bean.RunLog;
 import com.gaowj.utils.ParseJson;
 import com.gaowj.utils.SparkUtil;
+import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
@@ -28,8 +29,8 @@ public class JsonParseDemo {
                 return runLog.getUserId();
             }
         });
-        System.out.println(userId.collect());
 
+        result.saveAsTextFile("C:\\workStation\\spark_test\\2020-04-23");
         sc.stop();
     }
 }
