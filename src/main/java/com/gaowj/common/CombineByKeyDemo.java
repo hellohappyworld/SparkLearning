@@ -1,6 +1,6 @@
 package com.gaowj.common;
 
-import com.gaowj.utils.SparkUtil;
+import com.gaowj.utils.SparkUtils;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -35,7 +35,7 @@ public class CombineByKeyDemo {
 
 
     public static void main(String[] args) {
-        JavaSparkContext sc = SparkUtil.getSc("CombineByKeyDemo");
+        JavaSparkContext sc = SparkUtils.getSc("CombineByKeyDemo");
 
         List<Integer> data = Arrays.asList(1, 2, 4, 3, 5, 6, 7, 1, 2);
         JavaRDD<Integer> javaRDD = sc.parallelize(data);

@@ -1,6 +1,6 @@
 package com.gaowj.common;
 
-import com.gaowj.utils.SparkUtil;
+import com.gaowj.utils.SparkUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -15,7 +15,7 @@ import scala.Tuple2;
  */
 public class SequenceRead {
     public static void main(String[] args) {
-        JavaSparkContext sc = SparkUtil.getSc("SequenceRead");
+        JavaSparkContext sc = SparkUtils.getSc("SequenceRead");
         JavaPairRDD<Text, IntWritable> input = sc.sequenceFile("C:\\workStation\\spark_test\\2020-04-24", Text.class, IntWritable.class);
         JavaPairRDD<String, Integer> result = input.mapToPair(new ConverToNativeTypes());
         System.out.println(result.collect());

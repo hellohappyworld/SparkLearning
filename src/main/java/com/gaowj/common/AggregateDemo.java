@@ -1,6 +1,6 @@
 package com.gaowj.common;
 
-import com.gaowj.utils.SparkUtil;
+import com.gaowj.utils.SparkUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.api.java.JavaRDD;
@@ -32,7 +32,7 @@ public class AggregateDemo {
 
     public static void main(String[] args) {
         Logger.getLogger("org.apache.spark").setLevel(Level.ERROR);
-        JavaSparkContext sc = SparkUtil.getSc("AggregateDemo");
+        JavaSparkContext sc = SparkUtils.getSc("AggregateDemo");
 
         JavaRDD<Integer> parallelize = sc.parallelize(Arrays.asList(1, 2, 3, 4, 5, 6));
 

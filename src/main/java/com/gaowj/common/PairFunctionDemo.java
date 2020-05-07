@@ -1,6 +1,6 @@
 package com.gaowj.common;
 
-import com.gaowj.utils.SparkUtil;
+import com.gaowj.utils.SparkUtils;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -42,7 +42,7 @@ public class PairFunctionDemo implements Serializable {
     };
 
     public static void main(String[] args) {
-        JavaSparkContext sc = SparkUtil.getSc("PairFunctionDemo");
+        JavaSparkContext sc = SparkUtils.getSc("PairFunctionDemo");
 
         JavaRDD<String> lines = sc.parallelize(Arrays.asList("a_b", "c_d", "e_f", "g_h"));
 

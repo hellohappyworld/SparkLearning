@@ -1,7 +1,7 @@
 package com.gaowj.common;
 
 
-import com.gaowj.utils.SparkUtil;
+import com.gaowj.utils.SparkUtils;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -14,7 +14,7 @@ import org.apache.spark.sql.hive.HiveContext;
  */
 public class HiveContextDemo {
     public static void main(String[] args) {
-        JavaSparkContext sc = SparkUtil.getSc("HiveContextDemo");
+        JavaSparkContext sc = SparkUtils.getSc("HiveContextDemo");
         HiveContext hiveContext = new HiveContext(sc);
         Dataset<Row> runlog = hiveContext.jsonFile("C:\\Users\\gaowj\\Desktop\\test2.txt");
         runlog.registerTempTable("runlogTable");
