@@ -29,7 +29,8 @@ public class RedisPool {
         config.setMaxIdle(MAX_IDLE);
 //        config.setMaxWaitMillis(MAX_WAIT);
         config.setTestOnBorrow(TEST_ON_BORROW);
-        jedisPool = new JedisPool(config, "10.90.124.154", 80, TIMEOUT, "WxDCxfA8qi");
+//        jedisPool = new JedisPool(config, "10.90.124.154", 80, TIMEOUT, "WxDCxfA8qi");
+        jedisPool = new JedisPool(config, "10.90.18.13", 6379, TIMEOUT, "WxDCxfA8qi");
     }
 
     public static Jedis getJedisPool() {

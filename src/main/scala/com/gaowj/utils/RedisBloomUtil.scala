@@ -50,8 +50,8 @@ object RedisBloomUtil {
         val k = dataJson.getString(key)
         val v = dataJson.getString(value)
         try {
-          val : lang.Long = jedis.ttl(k)
-          if () {
+          val longTtl = jedis.ttl(k)
+          if (-2L == longTtl) {
             jedis.sendCommand(Command.RESERVE, k, "0.02", "100000")
             jedis.expire(k, 86400 * 90)
           }
