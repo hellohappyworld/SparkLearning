@@ -23,10 +23,6 @@ class SparkUtil {
       .config("spark.speculation", "true")
       .config("spark.kryoserializer.buffer.max", "1024m")
       .config("spark.scheduler.listenerbus.eventqueue.size", "100000")
-      //      .config("es.nodes", "10.80.29.157,10.80.30.157,10.80.31.157,10.80.32.157") //es的节点，多个用逗号分隔
-      //      .config("es.port", "9200") //端口号
-      //      .config("es.index.auto.create", "true")
-      //      .config("es.nodes.wan.only","false")
       .config("spark.driver.maxResultSize", "2g")
       .config("spark.shuffle.file.buffer", "128k")
       .config("spark.default.parallelism", "800")
@@ -34,6 +30,7 @@ class SparkUtil {
       .config("spark.driver.maxResultSize", "5G")
       .config("spark.sql.autoBroadcastJoinThreshold", "200000000")
       .getOrCreate()
+
     val conf = session.conf
     val sc = session.sparkContext
     sc.setLogLevel("ERROR")
