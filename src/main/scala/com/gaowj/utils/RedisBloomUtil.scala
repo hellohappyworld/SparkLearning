@@ -41,14 +41,16 @@ object RedisBloomUtil {
     val command = args(9)
     val partition = args(10).toInt
 
+    //单节点写13的布隆库
     session.sql(sql).toJSON.rdd.coalesce(partition).foreachPartition(datas => {
-      var jedis = RedisPool.getJedisPool()
-      jedis.select(redisDB)
+      //      var jedis = RedisPool.getJedisPool()
+      //      jedis.select(redisDB)
       //      val client = jedis.getClient
       for (data <- datas) {
         val dataJson = new JSONObject(data)
         val k = dataJson.getString(key)
         val v = dataJson.getString(value)
+        val jedis = RedisUtil.getUserJedis(k, RedisConst.DB_1)
         try {
           val longTtl = jedis.ttl(k)
           if (-2L == longTtl) {
@@ -60,61 +62,12 @@ object RedisBloomUtil {
           case e: Exception => {
             e.printStackTrace()
           }
+        } finally {
+          jedis.close()
         }
       }
-      jedis.close()
     }
     )
-
-    /*session.sql(sql).toJSON.rdd.coalesce(partition).foreachPartition(datas => {
-      for (data <- datas) {
-        var jedis = RedisPool.getJedisPool()
-        jedis.select(redisDB)
-        val client = jedis.getClient
-        val dataJson = new JSONObject(data)
-        val k = dataJson.getString(key)
-        val v = dataJson.getString(value)
-        try {
-          val str = jedis.`type`(k)
-          if ("none".equals(str)) {
-            client.sendCommand(Command.RESERVE, k, "0.02", "100000")
-            jedis.expire(k, 86400 * 90)
-          }
-          client.sendCommand(Command.ADD, k, v)
-        } catch {
-          case e: Exception => {
-            e.printStackTrace()
-          }
-        }
-        jedis.close()
-      }
-    }
-    )*/
-
-    /* session.sql(sql).toJSON.rdd.coalesce(partition).foreachPartition(datas => {
-       for (data <- datas) {
-         var jedis = RedisPool.getJedisPool()
-         jedis.select(redisDB)
-         val dataJson = new JSONObject(data)
-         val k = dataJson.getString(key)
-         val v = dataJson.getString(value)
-         try {
-           val str = jedis.`type`(k)
-           if ("none".equals(str)) {
-             //          val boolean = jedis.exists(k)
-             //          if (!boolean) {
-             RedisBloomFilter.createFilter(jedis, k, 100000, 0.02)
-           }
-           RedisBloomFilter.add(jedis, k, v)
-         } catch {
-           case e: Exception => {
-             e.printStackTrace()
-           }
-         }
-         jedis.close()
-       }
-     }
-     )*/
 
     session.stop()
   }
