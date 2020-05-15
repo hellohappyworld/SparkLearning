@@ -1,6 +1,7 @@
 package com.gaowj.utils
 
 import java.lang
+import java.util.zip.CRC32
 
 import io.rebloom.client.Command
 import org.json.JSONObject
@@ -50,7 +51,35 @@ object RedisBloomUtil {
         val dataJson = new JSONObject(data)
         val k = dataJson.getString(key)
         val v = dataJson.getString(value)
-        val jedis = RedisUtil.getUserJedis(k, RedisConst.DB_1)
+
+        val crc32 = new CRC32
+        crc32.update(k.getBytes)
+        val nUser = Math.abs(crc32.getValue.toInt % 10)
+        val db = 1;
+        var jedis: Jedis = null
+        nUser match {
+          case 0 =>
+            jedis = RedisPool.getJedis121_7002(db)
+          case 1 =>
+            jedis = RedisPool.getJedis122_7002(db)
+          case 2 =>
+            jedis = RedisPool.getJedis123_7002(db)
+          case 3 =>
+            jedis = RedisPool.getJedis124_7002(db)
+          case 4 =>
+            jedis = RedisPool.getJedis125_7002(db)
+          case 5 =>
+            jedis = RedisPool.getJedis126_7002(db)
+          case 6 =>
+            jedis = RedisPool.getJedis121_7001(db)
+          case 7 =>
+            jedis = RedisPool.getJedis122_7001(db)
+          case 8 =>
+            jedis = RedisPool.getJedis123_7001(db)
+          case 9 =>
+            jedis = RedisPool.getJedis124_7001(db)
+        }
+
         try {
           val longTtl = jedis.ttl(k)
           if (-2L == longTtl) {
