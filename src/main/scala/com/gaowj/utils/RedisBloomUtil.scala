@@ -51,7 +51,7 @@ object RedisBloomUtil {
         val num = uidHcode % 100
         if (num > 94 || k.startsWith("debugcoldpy") || k.startsWith("debugcoldtest")) {
           //python用户
-          val jedis = RedisPool.getJedisPool13
+          jedis = RedisPool.getJedisPool13
           jedis.select(dbSingle)
         } else {
           //java用户
