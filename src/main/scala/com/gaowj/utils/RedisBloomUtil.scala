@@ -44,43 +44,43 @@ object RedisBloomUtil {
         val k = dataJson.getString(key)
         val v = dataJson.getString(value)
         //判断用户是python用户还是java用户
-        val dbSingle = dbSingleArgs;
+        //        val dbSingle = dbSingleArgs;
         val dbTen = dbTenArgs;
         var jedis: Jedis = null
-        val uidHcode = Math.abs(k.hashCode)
+        /*val uidHcode = Math.abs(k.hashCode)
         val num = uidHcode % 100
         if (num > 94 || k.startsWith("debugcoldpy") || k.startsWith("debugcoldtest")) {
           //python用户
           jedis = RedisPool.getJedisPool13
           jedis.select(dbSingle)
-        } else {
-          //java用户
-          val crc32 = new CRC32
-          crc32.update(k.getBytes)
-          val nUser = Math.abs(crc32.getValue.toInt % 10)
-          nUser match {
-            case 0 =>
-              jedis = RedisPool.getJedis121_7002(dbTen)
-            case 1 =>
-              jedis = RedisPool.getJedis122_7002(dbTen)
-            case 2 =>
-              jedis = RedisPool.getJedis123_7002(dbTen)
-            case 3 =>
-              jedis = RedisPool.getJedis124_7002(dbTen)
-            case 4 =>
-              jedis = RedisPool.getJedis125_7002(dbTen)
-            case 5 =>
-              jedis = RedisPool.getJedis126_7002(dbTen)
-            case 6 =>
-              jedis = RedisPool.getJedis121_7001(dbTen)
-            case 7 =>
-              jedis = RedisPool.getJedis122_7001(dbTen)
-            case 8 =>
-              jedis = RedisPool.getJedis123_7001(dbTen)
-            case 9 =>
-              jedis = RedisPool.getJedis124_7001(dbTen)
-          }
+        } else {*/
+        //java用户
+        val crc32 = new CRC32
+        crc32.update(k.getBytes)
+        val nUser = Math.abs(crc32.getValue.toInt % 10)
+        nUser match {
+          case 0 =>
+            jedis = RedisPool.getJedis121_7002(dbTen)
+          case 1 =>
+            jedis = RedisPool.getJedis122_7002(dbTen)
+          case 2 =>
+            jedis = RedisPool.getJedis123_7002(dbTen)
+          case 3 =>
+            jedis = RedisPool.getJedis124_7002(dbTen)
+          case 4 =>
+            jedis = RedisPool.getJedis125_7002(dbTen)
+          case 5 =>
+            jedis = RedisPool.getJedis126_7002(dbTen)
+          case 6 =>
+            jedis = RedisPool.getJedis121_7001(dbTen)
+          case 7 =>
+            jedis = RedisPool.getJedis122_7001(dbTen)
+          case 8 =>
+            jedis = RedisPool.getJedis123_7001(dbTen)
+          case 9 =>
+            jedis = RedisPool.getJedis124_7001(dbTen)
         }
+        //      }
 
         try {
           val longTtl = jedis.ttl(k)
@@ -98,6 +98,7 @@ object RedisBloomUtil {
         }
       }
     }
+
     )
 
     session.stop()
