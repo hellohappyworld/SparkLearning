@@ -34,8 +34,8 @@ object RedisBloomUtil {
     val key = args(2)
     val value = args(3)
     val partition = args(4).toInt
-    val dbSingleArgs = args(5).toInt
-    val dbTenArgs = args(6).toInt
+    //    val dbSingleArgs = args(5).toInt
+    val dbTenArgs = args(5).toInt
 
     //单节点写13的布隆库
     session.sql(sql).toJSON.rdd.coalesce(partition).foreachPartition(datas => {
@@ -45,7 +45,7 @@ object RedisBloomUtil {
         val v = dataJson.getString(value)
         //判断用户是python用户还是java用户
         //        val dbSingle = dbSingleArgs;
-        val dbTen = dbTenArgs;
+        val dbTen = dbTenArgs
         var jedis: Jedis = null
         /*val uidHcode = Math.abs(k.hashCode)
         val num = uidHcode % 100
@@ -60,25 +60,25 @@ object RedisBloomUtil {
         val nUser = Math.abs(crc32.getValue.toInt % 10)
         nUser match {
           case 0 =>
-            jedis = RedisPool.getJedis121_7002(dbTen)
+            jedis = RedisPool.getJedis14_7002_BL(dbTen)
           case 1 =>
-            jedis = RedisPool.getJedis122_7002(dbTen)
+            jedis = RedisPool.getJedis15_7002_BL(dbTen)
           case 2 =>
-            jedis = RedisPool.getJedis123_7002(dbTen)
+            jedis = RedisPool.getJedis16_7002_BL(dbTen)
           case 3 =>
-            jedis = RedisPool.getJedis124_7002(dbTen)
+            jedis = RedisPool.getJedis17_7002_BL(dbTen)
           case 4 =>
-            jedis = RedisPool.getJedis125_7002(dbTen)
+            jedis = RedisPool.getJedis18_7002_BL(dbTen)
           case 5 =>
-            jedis = RedisPool.getJedis126_7002(dbTen)
+            jedis = RedisPool.getJedis19_7002_BL(dbTen)
           case 6 =>
-            jedis = RedisPool.getJedis121_7001(dbTen)
+            jedis = RedisPool.getJedis14_7001_BL(dbTen)
           case 7 =>
-            jedis = RedisPool.getJedis122_7001(dbTen)
+            jedis = RedisPool.getJedis15_7001_BL(dbTen)
           case 8 =>
-            jedis = RedisPool.getJedis123_7001(dbTen)
+            jedis = RedisPool.getJedis16_7001_BL(dbTen)
           case 9 =>
-            jedis = RedisPool.getJedis124_7001(dbTen)
+            jedis = RedisPool.getJedis17_7001_BL(dbTen)
         }
         //      }
 

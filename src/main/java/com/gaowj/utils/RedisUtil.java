@@ -4,6 +4,10 @@ import redis.clients.jedis.Jedis;
 
 import java.util.zip.CRC32;
 
+/**
+ * 用戶redis获取
+ */
+@SuppressWarnings("all")
 public class RedisUtil {
 
     /**
@@ -18,34 +22,81 @@ public class RedisUtil {
         Jedis jedis = null;
         switch (nUser) {
             case 0:
-                jedis = RedisPool.getJedis121_7002(db);
+                jedis = RedisPool.getJedis14_7002(db);
                 break;
             case 1:
-                jedis = RedisPool.getJedis122_7002(db);
+                jedis = RedisPool.getJedis15_7002(db);
                 break;
             case 2:
-                jedis = RedisPool.getJedis123_7002(db);
+                jedis = RedisPool.getJedis16_7002(db);
                 break;
             case 3:
-                jedis = RedisPool.getJedis124_7002(db);
+                jedis = RedisPool.getJedis17_7002(db);
                 break;
             case 4:
-                jedis = RedisPool.getJedis125_7002(db);
+                jedis = RedisPool.getJedis18_7002(db);
                 break;
             case 5:
-                jedis = RedisPool.getJedis126_7002(db);
+                jedis = RedisPool.getJedis19_7002(db);
                 break;
             case 6:
-                jedis = RedisPool.getJedis121_7001(db);
+                jedis = RedisPool.getJedis14_7001(db);
                 break;
             case 7:
-                jedis = RedisPool.getJedis122_7001(db);
+                jedis = RedisPool.getJedis15_7001(db);
                 break;
             case 8:
-                jedis = RedisPool.getJedis123_7001(db);
+                jedis = RedisPool.getJedis16_7001(db);
                 break;
             case 9:
-                jedis = RedisPool.getJedis124_7001(db);
+                jedis = RedisPool.getJedis17_7001(db);
+                break;
+            default:
+                break;
+        }
+        return jedis;
+    }
+
+    /**
+     * userRedis --> 用户 |CRC32 % 10| 所在的 redis节点
+     */
+    public static Jedis getUserJedisBL(String userkey, int db) {
+        CRC32 crc32 = new CRC32();
+        crc32.update(userkey.getBytes());
+
+        int nUser = Math.abs((int) crc32.getValue() % 10);
+
+        Jedis jedis = null;
+        switch (nUser) {
+            case 0:
+                jedis = RedisPool.getJedis14_7002_BL(db);
+                break;
+            case 1:
+                jedis = RedisPool.getJedis15_7002_BL(db);
+                break;
+            case 2:
+                jedis = RedisPool.getJedis16_7002_BL(db);
+                break;
+            case 3:
+                jedis = RedisPool.getJedis17_7002_BL(db);
+                break;
+            case 4:
+                jedis = RedisPool.getJedis18_7002_BL(db);
+                break;
+            case 5:
+                jedis = RedisPool.getJedis19_7002_BL(db);
+                break;
+            case 6:
+                jedis = RedisPool.getJedis14_7001_BL(db);
+                break;
+            case 7:
+                jedis = RedisPool.getJedis15_7001_BL(db);
+                break;
+            case 8:
+                jedis = RedisPool.getJedis16_7001_BL(db);
+                break;
+            case 9:
+                jedis = RedisPool.getJedis17_7001_BL(db);
                 break;
             default:
                 break;
