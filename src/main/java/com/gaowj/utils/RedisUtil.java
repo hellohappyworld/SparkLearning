@@ -57,6 +57,14 @@ public class RedisUtil {
         return jedis;
     }
 
+    public static void main(String[] args) {
+        CRC32 crc32 = new CRC32();
+        crc32.update("debugcoldjavagaowj202007071503".getBytes());
+
+        int nUser = Math.abs((int) crc32.getValue() % 10);
+        System.out.println(nUser);
+    }
+
     /**
      * userRedis --> 用户 |CRC32 % 10| 所在的 redis节点
      */
