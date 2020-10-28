@@ -86,7 +86,7 @@ object RedisBloomUtil {
           val longTtl = jedis.ttl(k)
           if (-2L == longTtl) {
             jedis.sendCommand(Command.RESERVE, k, "0.02", "100000")
-            jedis.expire(k, 86400 * 90)
+            jedis.expire(k, 86400 * 15)
           }
           jedis.sendCommand(Command.ADD, k, v)
         } catch {

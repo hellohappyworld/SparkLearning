@@ -18,19 +18,19 @@ public final class RedisConst {
     public static int HOST_18_12_PORT = 6379;
     public static String HOST_18_12_AUTH = "WxDCxfA8qi";
 
-    public static final String HOST_18_14 = "10.90.18.14";
-    public static final String HOST_18_15 = "10.90.18.15";
-    public static final String HOST_18_16 = "10.90.18.16";
-    public static final String HOST_18_17 = "10.90.18.17";
-    public static final String HOST_18_18 = "10.90.18.18";
-    public static final String HOST_18_19 = "10.90.18.19";
+    public static final String HOST_18_14 = "10.90.84.153";
+    public static final String HOST_18_15 = "10.90.85.153";
+    public static final String HOST_18_16 = "10.90.86.153";
+    public static final String HOST_18_17 = "10.90.87.153";
+    public static final String HOST_18_18 = "10.90.88.153";
+    public static final String HOST_18_19 = "10.90.89.153";
 
-    public static final String HOST_18_14_BL = "10.80.1.157";
-    public static final String HOST_18_15_BL = "10.80.2.157";
-    public static final String HOST_18_16_BL = "10.80.3.157";
-    public static final String HOST_18_17_BL = "10.80.4.157";
-    public static final String HOST_18_18_BL = "10.80.5.157";
-    public static final String HOST_18_19_BL = "10.80.6.157";
+    public static final String HOST_18_14_BL = "10.90.84.153";
+    public static final String HOST_18_15_BL = "10.90.85.153";
+    public static final String HOST_18_16_BL = "10.90.86.153";
+    public static final String HOST_18_17_BL = "10.90.87.153";
+    public static final String HOST_18_18_BL = "10.90.88.153";
+    public static final String HOST_18_19_BL = "10.90.89.153";
 
     public static final int PORT_7001 = 7001; // 用来处理用户级别的业务
     public static final int PORT_7002 = 7002; // 用来处理用户级别的业务

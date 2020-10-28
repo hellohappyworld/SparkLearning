@@ -7,22 +7,23 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 
+import java.util.List;
+
 public class JavaWordCount {
     public static void main(String[] args) {
         Logger.getLogger("org.apache.spark").setLevel(Level.ERROR);
 
         JavaSparkContext sc = SparkUtils.getSc("JavaWordCount");
 
-        JavaRDD<String> lines = sc.textFile("C:\\workStation\\runlogs");
-        long userKeyCount = lines.filter(new Function<String, Boolean>() {
-            @Override
-            public Boolean call(String s) throws Exception {
-                return s.contains("bdf9faf7ce3136aa");
-            }
-        }).count();
-        System.out.println(userKeyCount);
-//        String first = lines.first();
-//        System.out.println(first);
+//        JavaRDD<String> lines = sc.textFile("hdfs://10.90.7.168:8020/user/source/appsta_test/20200928/0000.1601222400093.log");
+        JavaRDD<String> lines = sc.textFile("C:\\tengxunyun\\1000.1601258400036");
+
+        List<String> collect = lines.collect();
+
+        for (String str : collect) {
+            System.out.println(str);
+        }
+
         sc.stop();
     }
 }
