@@ -13,14 +13,11 @@ import org.apache.spark.sql.SparkSession
 
 case class Juice(volumn: Int) {
   def add(j: Juice): Juice = Juice(volumn + j.volumn)
-
   def getV: Int = volumn
 }
-
 case class Fruit(kind: String, weight: Int) {
   def makeJuice: Juice = Juice(weight)
 }
-
 object CombineByKeyDemo {
   def main(args: Array[String]): Unit = {
     val spark: SparkSession = SparkSession
