@@ -1,7 +1,9 @@
 package com.gaowj.learn
 
 import org.apache.spark.SparkContext
-import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
+import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.types.{StringType, StructField, StructType}
+import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 
 /**
   * created by gaowj.
@@ -127,7 +129,55 @@ object SparkSQLExample {
       .map(_.split(","))
       .map(arr => Person(arr(0), arr(1).trim.toInt))
       .toDF()
+    peopleDF.createOrReplaceTempView("people")
+    val teenagersDF: DataFrame = spark.sql("select name,age from people where age between 13 and 19")
+    teenagersDF.map(teenager => "Name:" + teenager(0)).show()
+    //    +-----------+
+    //    |      value|
+    //    +-----------+
+    //    |Name:Justin|
+    //      +-----------+
+    teenagersDF.map(teenager => "Name:" + teenager.getAs[String]("name")).show()
+    //    +-----------+
+    //    |      value|
+    //    +-----------+
+    //    |Name:Justin|
+    //      +-----------+
+  }
+
+  def runProgrammaticSchemaExample(spark: SparkSession) = {
+    val peopleRDD: RDD[String] = spark.sparkContext.textFile("C:\\workStation\\ProjectStation\\SparkLearning\\src\\main\\resources\\people.txt")
+
+    val schemaString = "name,age"
+    val fields: Array[StructField] = schemaString.split(",")
+      .map(fieldName => StructField(fieldName, StringType, nullable = true))
+    val schema: StructType = StructType(fields)
+
+    val rowRDD: RDD[Row] = peopleRDD
+      .map(_.split(","))
+      .map(attributes => Row(attributes(0), attributes(1).trim))
+
+    val peopleDF: DataFrame = spark.createDataFrame(rowRDD, schema)
     peopleDF.show()
+    //    +-------+---+
+    //    |   name|age|
+    //    +-------+---+
+    //    |Michael| 29|
+    //      |   Andy| 30|
+    //      | Justin| 19|
+    //      +-------+---+
+    peopleDF.createOrReplaceTempView("people")
+    val results: DataFrame = spark.sql("select name from people")
+
+    import spark.implicits._
+    results.map(attributes => "Name:" + attributes(0)).show()
+    //    +------------+
+    //    |       value|
+    //    +------------+
+    //    |Name:Michael|
+    //      |   Name:Andy|
+    //      | Name:Justin|
+    //      +------------+
   }
 
   def main(args: Array[String]): Unit = {
@@ -142,7 +192,8 @@ object SparkSQLExample {
 
     //    runBasicDataFrameExample(spark)
     //    runDatasetCreationExample(spark)
-    runInferSchemaExample(spark)
+    //    runInferSchemaExample(spark)
+    runProgrammaticSchemaExample(spark)
 
     spark.stop()
   }
