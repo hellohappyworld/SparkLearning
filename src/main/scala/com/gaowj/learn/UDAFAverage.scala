@@ -8,10 +8,10 @@ import org.apache.spark.sql._
 /**
   * created by gaowj.
   * created on 2021-02-04.
-  * function:
+  * function: UDAF 算平均值
   * origin -> 
   */
-object UserDefinedUntypedAggregation {
+object UDAFAverage {
 
   object MyAverage extends UserDefinedAggregateFunction {
     override def inputSchema: StructType = StructType(StructField("inputColumn", LongType) :: Nil)
