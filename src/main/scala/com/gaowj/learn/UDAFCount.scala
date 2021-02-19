@@ -27,6 +27,7 @@ object UDAFCount {
     // 最终输出结果时的数据类型
     override def dataType: DataType = LongType
 
+    // 聚合函数是否是幂等性的，即相同输入是否总是能得到相同输出
     override def deterministic: Boolean = true
 
     // 初始时候使用，即没有数据时的值

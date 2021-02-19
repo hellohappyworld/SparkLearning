@@ -22,6 +22,7 @@ object UDAFAverage {
 
     override def dataType: DataType = DoubleType
 
+    // 聚合函数是否是幂等性的，即相同输入是否总是能得到相同输出
     override def deterministic: Boolean = true
 
     override def initialize(buffer: MutableAggregationBuffer): Unit = {
