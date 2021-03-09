@@ -42,10 +42,16 @@ object WxGxsLogParse {
   }
 
   def main(args: Array[String]): Unit = {
-    val spark: SparkSession = SparkSession
+    /*val spark: SparkSession = SparkSession
       .builder()
       .config("spark.master", "yarn-cluster")
       .appName("WxGxsLogParse")
+      .getOrCreate()*/
+    val spark: SparkSession = SparkSession
+      .builder()
+      .appName("WxGxsLogParse")
+      .config("spark.master", "local")
+      .config("spark.driver.host", "localhost")
       .getOrCreate()
     val sc: SparkContext = spark.sparkContext
     sc.setLogLevel("ERROR")
@@ -54,8 +60,8 @@ object WxGxsLogParse {
     val outPath = args(1)
 
     //    val sourceRDD = sc.textFile("file:///C:/workStation/wx_gxs/0350.1615146602358*")
-    //    val sourceRDD = sc.textFile("file:///" + inPath)
-    val sourceRDD = sc.textFile(inPath)
+    val sourceRDD = sc.textFile("file:///" + inPath)
+    //    val sourceRDD = sc.textFile(inPath)
     //    sourceRDD.foreach(println)
     val resultRDD = sourceRDD.flatMap(input => {
       val result: ArrayBuffer[String] = ArrayBuffer()
@@ -136,11 +142,11 @@ object WxGxsLogParse {
 
     //    resultRDD.foreach(println)
     val errOutRDD = resultRDD.filter(_.contains("errLog"))
-    errOutRDD.saveAsTextFile(outPath + "/errOutLog")
+    errOutRDD.coalesce(1).saveAsTextFile(outPath + "/errOutLog")
     //    errOutRDD.foreach(println)
     val outRDD = resultRDD.filter(!_.contains("errLog"))
     //    outRDD.foreach(println)
-    outRDD.saveAsTextFile(outPath + "/outLog")
+    outRDD.coalesce(1).saveAsTextFile(outPath + "/outLog")
 
     spark.stop()
   }
